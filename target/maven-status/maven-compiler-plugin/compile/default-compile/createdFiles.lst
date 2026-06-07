@@ -7,6 +7,8 @@ com\medical\dao\UtilisateurDAO.class
 com\medical\dao\ConsultationDAO.class
 com\medical\service\AuthService.class
 com\medical\model\Utilisateur.class
+com\medical\controller\MedecinFormDialog.class
+com\medical\controller\MedecinsController.class
 com\medical\controller\MainController.class
 com\medical\App.class
 com\medical\model\Consultation.class

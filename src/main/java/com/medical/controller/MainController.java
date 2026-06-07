@@ -71,11 +71,11 @@ public class MainController {
     private void showPatients() {
         chargerModule("/view/Patients.fxml");
     }
-
-    @FXML
-    private void showMedecins() {
-        showInfo("Module Médecins", "Le module Médecins sera disponible prochainement.");
-    }
+@FXML
+private void showMedecins() {
+    System.out.println(">>> CLIC SUR MEDECINS DETECTE <<<");
+    chargerModule("/view/Medecins.fxml");
+}
 
     @FXML
     private void showConsultations() {
@@ -85,7 +85,7 @@ public class MainController {
     private void chargerModule(String fxmlPath) {
         try {
             Parent module = FXMLLoader.load(getClass().getResource(fxmlPath));
-            BorderPane borderPane = (BorderPane) lblTitre.getScene().getRoot();
+           BorderPane borderPane = (BorderPane) App.getPrimaryStage().getScene().getRoot();
             borderPane.setCenter(module);
         } catch (Exception e) {
             e.printStackTrace();
