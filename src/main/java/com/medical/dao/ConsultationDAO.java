@@ -1,6 +1,8 @@
 package com.medical.dao;
 
 import com.medical.model.Consultation;
+import com.medical.model.Medecin;
+import com.medical.model.Patient;
 import com.medical.util.DatabaseConnection;
 
 import java.sql.Connection;
@@ -13,9 +15,19 @@ import java.util.List;
 
 public class ConsultationDAO {
 
+    private static final String SELECT_JOIN =
+        "SELECT c.*, " +
+        "p.nom AS p_nom, p.prenom AS p_prenom, p.date_naissance AS p_dn, p.sexe AS p_sexe, " +
+        "p.telephone AS p_tel, p.email AS p_email, p.adresse AS p_adresse, " +
+        "m.nom AS m_nom, m.prenom AS m_prenom, m.specialite AS m_specialite, " +
+        "m.telephone AS m_tel, m.email AS m_email " +
+        "FROM consultations c " +
+        "LEFT JOIN patients p ON c.id_patient = p.id_patient " +
+        "LEFT JOIN medecins m ON c.id_medecin = m.id_medecin ";
+
     public List<Consultation> findAll() {
         List<Consultation> consultations = new ArrayList<>();
-        String sql = "SELECT * FROM consultations ORDER BY date_consultation DESC";
+        String sql = SELECT_JOIN + "ORDER BY c.date_consultation DESC";
         Connection conn = DatabaseConnection.getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql);
@@ -30,7 +42,7 @@ public class ConsultationDAO {
     }
 
     public Consultation findById(int id) {
-        String sql = "SELECT * FROM consultations WHERE id_consultation = ?";
+        String sql = SELECT_JOIN + "WHERE c.id_consultation = ?";
         Connection conn = DatabaseConnection.getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -45,7 +57,7 @@ public class ConsultationDAO {
 
     public List<Consultation> findByPatient(int idPatient) {
         List<Consultation> consultations = new ArrayList<>();
-        String sql = "SELECT * FROM consultations WHERE id_patient = ? ORDER BY date_consultation DESC";
+        String sql = SELECT_JOIN + "WHERE c.id_patient = ? ORDER BY c.date_consultation DESC";
         Connection conn = DatabaseConnection.getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -62,7 +74,7 @@ public class ConsultationDAO {
 
     public List<Consultation> findRecent(int limit) {
         List<Consultation> consultations = new ArrayList<>();
-        String sql = "SELECT * FROM consultations ORDER BY date_consultation DESC LIMIT ?";
+        String sql = SELECT_JOIN + "ORDER BY c.date_consultation DESC LIMIT ?";
         Connection conn = DatabaseConnection.getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -164,6 +176,29 @@ public class ConsultationDAO {
         c.setMotif(rs.getString("motif"));
         c.setDiagnostic(rs.getString("diagnostic"));
         c.setTraitement(rs.getString("traitement"));
+
+        // Charger le patient associe
+        Patient p = new Patient();
+        p.setIdPatient(rs.getInt("id_patient"));
+        p.setNom(rs.getString("p_nom"));
+        p.setPrenom(rs.getString("p_prenom"));
+        if (rs.getDate("p_dn") != null) p.setDateNaissance(rs.getDate("p_dn").toLocalDate());
+        p.setSexe(rs.getString("p_sexe"));
+        p.setTelephone(rs.getString("p_tel"));
+        p.setEmail(rs.getString("p_email"));
+        p.setAdresse(rs.getString("p_adresse"));
+        c.setPatient(p);
+
+        // Charger le medecin associe
+        Medecin m = new Medecin();
+        m.setIdMedecin(rs.getInt("id_medecin"));
+        m.setNom(rs.getString("m_nom"));
+        m.setPrenom(rs.getString("m_prenom"));
+        m.setSpecialite(rs.getString("m_specialite"));
+        m.setTelephone(rs.getString("m_tel"));
+        m.setEmail(rs.getString("m_email"));
+        c.setMedecin(m);
+
         return c;
     }
 }

@@ -77,10 +77,10 @@ private void showMedecins() {
     chargerModule("/view/Medecins.fxml");
 }
 
-    @FXML
-    private void showConsultations() {
-        showInfo("Module Consultations", "Le module Consultations sera disponible prochainement.");
-    }
+   @FXML
+private void showConsultations() {
+    chargerModule("/view/Consultations.fxml");
+}
 
     private void chargerModule(String fxmlPath) {
         try {

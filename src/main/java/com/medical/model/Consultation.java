@@ -12,10 +12,12 @@ public class Consultation {
     private String diagnostic;
     private String traitement;
 
-    // Constructeur vide
+    // Objets associes pour affichage
+    private Patient patient;
+    private Medecin medecin;
+
     public Consultation() {}
 
-    // Constructeur complet
     public Consultation(int idConsultation, int idPatient, int idMedecin,
                         LocalDateTime dateConsultation, String motif,
                         String diagnostic, String traitement) {
@@ -28,7 +30,6 @@ public class Consultation {
         this.traitement = traitement;
     }
 
-    // Getters et Setters
     public int getIdConsultation() { return idConsultation; }
     public void setIdConsultation(int idConsultation) { this.idConsultation = idConsultation; }
 
@@ -49,6 +50,18 @@ public class Consultation {
 
     public String getTraitement() { return traitement; }
     public void setTraitement(String traitement) { this.traitement = traitement; }
+
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+        if (patient != null) this.idPatient = patient.getIdPatient();
+    }
+
+    public Medecin getMedecin() { return medecin; }
+    public void setMedecin(Medecin medecin) {
+        this.medecin = medecin;
+        if (medecin != null) this.idMedecin = medecin.getIdMedecin();
+    }
 
     @Override
     public String toString() {
