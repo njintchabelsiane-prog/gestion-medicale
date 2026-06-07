@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -24,6 +25,8 @@ public class MainController {
     @FXML private Label lblUtilisateur;
     @FXML private Label lblRole;
     @FXML private Label lblDate;
+    @FXML private Label lblTitre;
+    @FXML private Label lblSousTitre;
     @FXML private Label lblNbPatients;
     @FXML private Label lblNbMedecins;
     @FXML private Label lblNbConsultations;
@@ -35,19 +38,16 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        // Afficher l'utilisateur connecté
         Utilisateur user = AuthService.getUtilisateurConnecte();
         if (user != null) {
             lblUtilisateur.setText(user.getPrenom() + " " + user.getNom());
             lblRole.setText(user.getRole());
         }
 
-        // Afficher la date du jour en français
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.FRENCH);
         String dateStr = LocalDate.now().format(formatter);
         lblDate.setText(dateStr.substring(0, 1).toUpperCase() + dateStr.substring(1));
 
-        // Charger les statistiques
         chargerStatistiques();
     }
 
@@ -69,7 +69,7 @@ public class MainController {
 
     @FXML
     private void showPatients() {
-        showInfo("Module Patients", "Le module Patients sera disponible prochainement.");
+        chargerModule("/view/Patients.fxml");
     }
 
     @FXML
@@ -80,6 +80,17 @@ public class MainController {
     @FXML
     private void showConsultations() {
         showInfo("Module Consultations", "Le module Consultations sera disponible prochainement.");
+    }
+
+    private void chargerModule(String fxmlPath) {
+        try {
+            Parent module = FXMLLoader.load(getClass().getResource(fxmlPath));
+            BorderPane borderPane = (BorderPane) lblTitre.getScene().getRoot();
+            borderPane.setCenter(module);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showInfo("Erreur", "Impossible de charger le module : " + e.getMessage());
+        }
     }
 
     @FXML
@@ -103,5 +114,5 @@ public class MainController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-}
+            }
+        }        

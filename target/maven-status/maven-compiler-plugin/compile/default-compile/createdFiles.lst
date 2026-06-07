@@ -1,6 +1,7 @@
 com\medical\dao\MedecinDAO.class
 com\medical\Launcher.class
 com\medical\model\Medecin.class
+com\medical\controller\PatientFormDialog.class
 com\medical\dao\PatientDAO.class
 com\medical\dao\UtilisateurDAO.class
 com\medical\dao\ConsultationDAO.class
@@ -10,5 +11,6 @@ com\medical\controller\MainController.class
 com\medical\App.class
 com\medical\model\Consultation.class
 com\medical\controller\LoginController.class
+com\medical\controller\PatientsController.class
 com\medical\util\DatabaseConnection.class
 com\medical\model\Patient.class
