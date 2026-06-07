@@ -6,6 +6,7 @@ com\medical\dao\UtilisateurDAO.class
 com\medical\dao\ConsultationDAO.class
 com\medical\service\AuthService.class
 com\medical\model\Utilisateur.class
+com\medical\controller\MainController.class
 com\medical\App.class
 com\medical\model\Consultation.class
 com\medical\controller\LoginController.class
