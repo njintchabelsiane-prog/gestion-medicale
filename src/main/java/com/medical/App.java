@@ -1,22 +1,30 @@
 package com.medical;
 
-import com.medical.service.AuthService;
-import com.medical.model.Utilisateur;
-import com.medical.util.DatabaseConnection;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class App {
+public class App extends Application {
+
+    private static Stage primaryStage;
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        primaryStage = stage;
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        stage.setTitle("Gestion Médicale - Connexion");
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     public static void main(String[] args) {
-        System.out.println("=== TEST LOGIN ===\n");
-
-        AuthService authService = new AuthService();
-        Utilisateur admin = authService.login("admin@medical.fr", "admin123");
-        
-        if (admin != null) {
-            System.out.println("✅ Login réussi !");
-            System.out.println("Utilisateur : " + AuthService.getUtilisateurConnecte());
-            System.out.println("Est admin ? " + AuthService.estAdmin());
-        }
-
-        DatabaseConnection.closeConnection();
+        launch(args);
     }
 }

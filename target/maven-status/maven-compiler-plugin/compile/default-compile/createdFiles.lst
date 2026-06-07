@@ -1,1 +1,13 @@
+com\medical\dao\MedecinDAO.class
+com\medical\Launcher.class
+com\medical\model\Medecin.class
+com\medical\dao\PatientDAO.class
+com\medical\dao\UtilisateurDAO.class
+com\medical\dao\ConsultationDAO.class
+com\medical\service\AuthService.class
+com\medical\model\Utilisateur.class
 com\medical\App.class
+com\medical\model\Consultation.class
+com\medical\controller\LoginController.class
+com\medical\util\DatabaseConnection.class
+com\medical\model\Patient.class
